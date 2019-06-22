@@ -13,5 +13,5 @@ Carbon Dioxide plume detection algorithm in Python
 ## Presentation and Education
 An active learning problem set and a presentation of a biophysical analysis
 
-## Roboric Perception
+## Robotic Perception
 Python scripts implementing the SegNET deep neural network as well as other image processing.
