@@ -1,6 +1,6 @@
 # Work_Examples
 
-This repositories contains some of my previous progeamming and engineering projects, as well as some examples of presentations and teaching material that I created.
+This repositories contains some of my previous programming and engineering projects, as well as some examples of presentations and teaching material that I created.
 
 READMEs included in each file.
 
