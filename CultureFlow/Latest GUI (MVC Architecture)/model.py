@@ -16,3 +16,6 @@ class CultureFlow_Model():
         self.mswitch = Mswitch()
 
         self.devices = {"pump":self.pump,"mswitch":self.mswitch}
+
+    def getPos(self):
+        return 'none atm'

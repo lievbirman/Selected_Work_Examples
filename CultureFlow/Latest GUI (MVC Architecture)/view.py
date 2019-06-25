@@ -6,8 +6,7 @@ from tkinter import Tk
 from tkinter import  Frame, Button, Label, Entry, Scrollbar, Canvas
 from tkinter import font, E, W, N, S, RIGHT, LEFT, CENTER, HORIZONTAL, VERTICAL, BOTH, TOP, BOTTOM, X, Y
 from system_control import CultureFlow_Control
-from gui_helper import Page, Pump_Widget, Circulation_Widget, Mswitch_Widget,Collection_Widget
-
+from gui_helper import Page, Pump_Widget, Circulation_Widget, Mswitch_Widget, Collection_Widget, Recipe_Creator_Widget, Recipe_Display_Widget, Plate_Control_Widget
 
 #default_font = tkFont.nametofont("TkDefaultFont")
 #default_font.configure(size=48)
@@ -42,10 +41,9 @@ class App(Tk):
 
 
         self.navigation_buttons = {'Home': lambda: self.show_frame(Home),
-         'Recipe Creator': lambda: self.show_frame(Recipe_Creator),
          'Settings': lambda: self.show_frame(Settings)}
 
-        self.pages = (Loading,Home,Recipe_Creator,Settings)
+        self.pages = (Loading,Home,Settings)
 
         self.frames = {}
         for F in self.pages:
@@ -89,23 +87,40 @@ class Home(Page):
     def __init__(self, parent, controller):
         Page.__init__(self,parent,controller)
 
+
         #create and pack pump control widget
-        pump_widget = Pump_Widget(self.my_canvas.frame,controller)
-        pump_widget.pack(fill=X)
+        self.pump_widget = Pump_Widget(self.my_canvas.frame,controller)
+        self.pump_widget.pack(side='top',fill=X)
 
         #create and pack circulation control widget
-        circulation_widget = Circulation_Widget(self.my_canvas.frame,controller)
-        circulation_widget.pack(fill=X)
+        self.circulation_widget = Circulation_Widget(self.my_canvas.frame,controller)
+        self.circulation_widget.pack(side='top',fill=X)
 
         #create and pack mswitch widget
-        mswitch_widget = Mswitch_Widget(self.my_canvas.frame,controller)
-        mswitch_widget.pack(fill=X)
+        self.mswitch_widget = Mswitch_Widget(self.my_canvas.frame,controller)
+        self.mswitch_widget.pack(side='top',fill=X)
 
         #create and pack collection widget
-        collection_widget = Collection_Widget(self.my_canvas.frame,controller)
-        collection_widget.pack(fill=X)
+        self.collection_widget = Collection_Widget(self.my_canvas.frame,controller)
+        self.collection_widget.pack(side='top',fill=X)
 
+        #step editor widget - takes in values from all previous widgets/stores steps
+        widget_dictionary = {'pump_widget':self.pump_widget,
+        'circulation_widget':self.circulation_widget,
+        'mswitch_widget':self.mswitch_widget,
+        'collection_widget':self.collection_widget}
 
+        self.recipe_creator_widget = Recipe_Creator_Widget(self.my_canvas.frame,controller,widget_dictionary=widget_dictionary)
+        self.recipe_creator_widget.pack(side='top',fill=X)
+
+        #step list widget - displays all steps and is passed to system_control.py
+        self.recipe_display_widget = Recipe_Display_Widget(self.my_canvas.frame,controller,recipe_creator_widget=self.recipe_creator_widget)
+        self.recipe_display_widget.pack(side='top',fill=X)
+        self.recipe_creator_widget.widget_dictionary['recipe_display_widget'] = self.recipe_display_widget
+
+        #plate control widget
+        self.plate_control_widget = Plate_Control_Widget(self.my_canvas.frame,controller)
+        self.plate_control_widget.pack(side='top',fill=X)
 
 class Recipe_Creator(Page):
     def __init__(self, parent, controller):

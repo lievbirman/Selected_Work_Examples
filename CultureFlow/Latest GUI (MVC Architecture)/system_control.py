@@ -116,3 +116,20 @@ class CultureFlow_Control():
 
     def start_collection(self,samples,time):
         print("this many ",samples,"for this long",time)
+
+    def eject(self):
+        print('ejecting')
+        ""
+    def reset(self):
+        print('resetting')
+        ""
+    def next(self):
+        print('nexting')
+        ""
+    def prev(self):
+        print('preving')
+        ""
+
+    def getPos(self):
+        return self.model.getPos()
+        ""
